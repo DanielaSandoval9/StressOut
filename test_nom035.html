@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test NOM-035 - StressOut</title>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f5f0;
+            color: #5c4b3c;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header y navegación */
+        header {
+            background-color: #9b8579;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f8f5f0;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #6d5c4b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #5c4b3c;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Contenido principal */
+        main {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: #6d5c4b;
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            font-size: 1.1rem;
+            color: #5c4b3c;
+        }
+
+        /* Estilos específicos para el test */
+        .test-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .test-intro {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e6e0d8;
+        }
+
+        .question h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #6d5c4b;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .submit-btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .results {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results h2 {
+            font-size: 1.8rem;
+            color: #6d5c4b;
+            margin-bottom: 20px;
+        }
+
+        .result-summary {
+            margin-bottom: 20px;
+        }
+
+        .result-detail {
+            margin-bottom: 15px;
+        }
+
+        .result-detail h3 {
+            font-size: 1.2rem;
+            color: #6d5c4b;
+            margin-bottom: 10px;
+        }
+
+        .result-detail p {
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: #e6e0d8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #9b8579;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #6d5c4b;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #f8f5f0;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Estilos para autenticación */
+        .auth-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .auth-modal {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-modal h2 {
+            color: #6d5c4b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d7cdbf;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .options {
+                flex-direction: column;
+            }
+
+            .option {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y navegación -->
+    <header>
+        <nav>
+            <div class="logo">StressOut</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="test_nom035.html"><i class="fas fa-clipboard-list"></i> Test NOM-035</a></li>
+                <li><a href="pausas_activas.html"><i class="fas fa-running"></i> Pausas Activas</a></li>
+                <li><a href="diario_emocional.html"><i class="fas fa-book"></i> Diario Emocional</a></li>
+                <li><a href="consejos_breves.html"><i class="fas fa-lightbulb"></i> Consejos Breves</a></li>
+                <li><a href="checklist_nom035.html"><i class="fas fa-tasks"></i> Checklist NOM-035</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>
+                <button id="logoutBtn" class="btn btn-outline hidden"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        <div class="container">
+            <section class="page-title">
+                <h1>Test NOM-035</h1>
+                <p>Evalúa los factores de riesgo psicosocial en tu entorno laboral</p>
+            </section>
+
+            <section class="test-container" id="testForm">
+                <div class="test-intro">
+                    <p>Este test está diseñado para identificar los factores de riesgo psicosocial en tu entorno laboral, conforme a los lineamientos de la NOM-035. Responde honestamente a cada pregunta para obtener un diagnóstico preciso.</p>
+                </div>
+
+                <form id="nom035Form">
+                    <div class="question">
+                        <h3>1. ¿Con qué frecuencia te sientes agotado emocionalmente debido a tu trabajo?</h3>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q1" value="0"> Nunca</label>
+                            <label class="option"><input type="radio" name="q1" value="1"> Casi nunca</label>
+                            <label class="option"><input type="radio" name="q1" value="2"> A veces</label>
+                            <label class="option"><input type="radio" name="q1" value="3"> Frecuentemente</label>
+                            <label class="option"><input type="radio" name="q1" value="4"> Siempre</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h3>2. ¿Consideras que tu carga de trabajo es excesiva?</h3>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q2" value="0"> Nunca</label>
+                            <label class="option"><input type="radio" name="q2" value="1"> Casi nunca</label>
+                            <label class="option"><input type="radio" name="q2" value="2"> A veces</label>
+                            <label class="option"><input type="radio" name="q2" value="3"> Frecuentemente</label>
+                            <label class="option"><input type="radio" name="q2" value="4"> Siempre</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h3>3. ¿Tienes suficiente tiempo para realizar tus tareas laborales?</h3>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q3" value="4"> Nunca</label>
+                            <label class="option"><input type="radio" name="q3" value="3"> Casi nunca</label>
+                            <label class="option"><input type="radio" name="q3" value="2"> A veces</label>
+                            <label class="option"><input type="radio" name="q3" value="1"> Frecuentemente</label>
+                            <label class="option"><input type="radio" name="q3" value="0"> Siempre</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h3>4. ¿Puedes decidir sobre el ritmo y la forma en que realizas tu trabajo?</h3>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q4" value="4"> Nunca</label>
+                            <label class="option"><input type="radio" name="q4" value="3"> Casi nunca</label>
+                            <label class="option"><input type="radio" name="q4" value="2"> A veces</label>
+                            <label class="option"><input type="radio" name="q4" value="1"> Frecuentemente</label>
+                            <label class="option"><input type="radio" name="q4" value="0"> Siempre</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h3>5. ¿Sientes que tu trabajo contribuye a la sociedad?</h3>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="q5" value="4"> Nunca</label>
+                            <label class="option"><input type="radio" name="q5" value="3"> Casi nunca</label>
+                            <label class="option"><input type="radio" name="q5" value="2"> A veces</label>
+                            <label class="option"><input type="radio" name="q5" value="1">
