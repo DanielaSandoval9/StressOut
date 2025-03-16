@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StressOut - NOM-035</title>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f5f0;
+            color: #5c4b3c;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header y navegación */
+        header {
+            background-color: #9b8579;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f8f5f0;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #6d5c4b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #5c4b3c;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Contenido principal */
+        main {
+            padding: 40px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #6d5c4b;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #5c4b3c;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #9b8579;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #6d5c4b;
+        }
+
+        .feature-card p {
+            color: #5c4b3c;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #6d5c4b;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #f8f5f0;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Estilos para la página de login/registro */
+        .auth-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .auth-modal {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-modal h2 {
+            color: #6d5c4b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #5c4b3c;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d7cdbf;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #9b8579;
+            outline: none;
+        }
+
+        .auth-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .auth-switch a {
+            color: #9b8579;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Estilos para mensajes de alerta */
+        .alert {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: #6d5c4b;
+                flex-direction: column;
+                transition: left 0.3s;
+                z-index: 100;
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header y navegación -->
+    <header>
+        <nav>
+            <div class="logo">StressOut</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="test_nom035.html"><i class="fas fa-clipboard-list"></i> Test NOM-035</a></li>
+                <li><a href="pausas_activas.html"><i class="fas fa-running"></i> Pausas Activas</a></li>
+                <li><a href="diario_emocional.html"><i class="fas fa-book"></i> Diario Emocional</a></li>
+                <li><a href="consejos_breves.html"><i class="fas fa-lightbulb"></i> Consejos Breves</a></li>
+                <li><a href="checklist_nom035.html"><i class="fas fa-tasks"></i> Checklist NOM-035</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>
+                <button id="logoutBtn" class="btn btn-outline hidden"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>Bienvenido a StressOut</h1>
+                <p>Una plataforma diseñada para mejorar tu bienestar en el trabajo y cumplir con los lineamientos de la NOM-035. Cuida tu salud mental y mejora tu ambiente laboral con nuestras herramientas.</p>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Test NOM-035</h3>
+                    <p>Evalúa los factores de riesgo psicosocial en tu entorno laboral con nuestro test completo basado en la NOM-035.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3>Pausas Activas</h3>
+                    <p>Recibe notificaciones para realizar pausas activas durante tu jornada laboral y reducir el estrés.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Diario Emocional</h3>
+                    <p>Registra tu estado emocional diario y visualiza tu progreso a través del tiempo con nuestra herramienta de seguimiento.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Consejos Breves</h3>
+                    <p>Accede a consejos prácticos sobre manejo del estrés, alimentación saludable y técnicas para mejorar tu calidad de sueño.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Checklist NOM-035</h3>
+                    <p>Realiza un seguimiento semanal de los factores de riesgo psicosocial en tu entorno laboral.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="test_nom035.html">Test NOM-035</a></li>
+                    <li><a href="pausas_activas.html">Pausas Activas</a></li>
+                    <li><a href="diario_emocional.html">Diario Emocional</a></li>
+                    <li><a href="consejos_breves.html">Consejos Breves</a></li>
+                    <li><a href="checklist_nom035.html">Checklist NOM-035</a></li>
+                </ul>
+                <p class="copyright">&copy; 2025 StressOut. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de autenticación -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-modal">
+            <!-- Formulario de inicio de sesión -->
+            <div id="loginForm">
+                <h2>Iniciar Sesión</h2>
+                <div id="loginAlert" class="alert hidden"></div>
+                <div class="form-group">
+                    <label for="loginEmail">Correo electrónico</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="correo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Tu contraseña">
+                </div>
+                <div class="auth-btns">
+                    <button id="cancelLoginBtn" class="btn btn-outline">Cancelar</button>
+                    <button id="submitLoginBtn" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+                <div class="auth-switch">
+                    ¿No tienes una cuenta? <a id="showRegisterBtn">Regístrate</a>
+                </div>
+            </div>
+
+            <!-- Formulario de registro -->
+            <div id="registerForm" class="hidden">
+                <h2>Crear Cuenta</h2>
+                <div id="registerAlert" class="alert hidden"></div>
+                <div class="form-group">
+                    <label for="registerName">Nombre completo</label
